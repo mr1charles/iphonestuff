@@ -21,6 +21,10 @@ struct SettingsRootView: View {
                     NavigationLink("Second Space") { SecondSpaceSettingsView() }
                 }
 
+                Section("Mock Fingerprint") {
+                    NavigationLink("Mock Fingerprint") { FingerprintSettingsView() }
+                }
+
                 Section("Appearance") {
                     NavigationLink("Appearance") { AppearanceSettingsView() }
                 }

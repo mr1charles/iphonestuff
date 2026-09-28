@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8614C825A3BE4AA49A7FBE5A"
+               BlueprintIdentifier = "E24045005D4C428F8A29C5FA"
                BuildableName = "DreamTweaks.app"
                BlueprintName = "DreamTweaks"
                ReferencedContainer = "container:DreamTweaks.xcodeproj">
@@ -28,7 +28,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "02C9F96F01FE49E59405F7CC"
+               BlueprintIdentifier = "9A836F80F99D484987BC0586"
                BuildableName = "DreamTweaksTests.xctest"
                BlueprintName = "DreamTweaksTests"
                ReferencedContainer = "container:DreamTweaks.xcodeproj">
@@ -46,7 +46,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "02C9F96F01FE49E59405F7CC"
+               BlueprintIdentifier = "9A836F80F99D484987BC0586"
                BuildableName = "DreamTweaksTests.xctest"
                BlueprintName = "DreamTweaksTests"
                ReferencedContainer = "container:DreamTweaks.xcodeproj">
@@ -68,7 +68,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8614C825A3BE4AA49A7FBE5A"
+            BlueprintIdentifier = "E24045005D4C428F8A29C5FA"
             BuildableName = "DreamTweaks.app"
             BlueprintName = "DreamTweaks"
             ReferencedContainer = "container:DreamTweaks.xcodeproj">
@@ -85,7 +85,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8614C825A3BE4AA49A7FBE5A"
+            BlueprintIdentifier = "E24045005D4C428F8A29C5FA"
             BuildableName = "DreamTweaks.app"
             BlueprintName = "DreamTweaks"
             ReferencedContainer = "container:DreamTweaks.xcodeproj">

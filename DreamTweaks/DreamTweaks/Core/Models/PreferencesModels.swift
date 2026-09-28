@@ -32,4 +32,5 @@ struct DreamTweaksPreferences: Codable, Equatable {
     var animations: AnimationSettings = AnimationSettings()
     var secondSpaceEnabled: Bool = false
     var activeSpaceID: UUID?
+    var fingerprint: FingerprintSimulationSettings = FingerprintSimulationSettings()
 }

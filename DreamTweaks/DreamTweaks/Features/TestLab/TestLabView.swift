@@ -40,6 +40,21 @@ struct TestLabView: View {
                 }
             }
 
+            Section("Fingerprint Sensor") {
+                Button("Test Touch Detection") { appState.fingerprintManager.touchDown() }
+                Button("Start Scan") { appState.fingerprintManager.startScan() }
+                Button("Force Success") { appState.fingerprintManager.forceSuccess() }
+                Button("Force Failure") { appState.fingerprintManager.forceFailure() }
+                Button("Test Haptic") { HapticsService.success() }
+                NavigationLink("Show Touch Coordinates") {
+                    FingerprintTestSensorView(showCoordinates: true)
+                }
+                NavigationLink("Show Sensor Bounds") {
+                    FingerprintTestSensorView(showBounds: true)
+                }
+                Button("Reset Sensor", role: .destructive) { appState.fingerprintManager.reset() }
+            }
+
             Section("Second Space") {
                 Button("Test Second Space") {
                     if spaces.spaces.count < 2 {

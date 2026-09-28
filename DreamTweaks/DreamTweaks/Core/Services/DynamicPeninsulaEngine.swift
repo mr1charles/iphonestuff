@@ -63,6 +63,15 @@ final class DefaultDynamicPeninsulaEngine: DynamicPeninsulaEngine {
             state = .notification(NotificationInfo(appName: appName, message: message))
         case .secondSpaceSwitched(let name):
             state = .notification(NotificationInfo(appName: "Second Space", message: "Switched to \(name)"))
+        case .fingerprintScanProgress(let progress):
+            isExpanded = true
+            state = .fingerprint(FingerprintPeninsulaInfo(phase: .reading, progress: progress))
+        case .fingerprintScanSucceeded:
+            state = .fingerprint(FingerprintPeninsulaInfo(phase: .success, progress: 1))
+        case .fingerprintScanFailed:
+            state = .fingerprint(FingerprintPeninsulaInfo(phase: .failure, progress: 0))
+        case .fingerprintScanDismissed:
+            resetToCompact()
         }
     }
 

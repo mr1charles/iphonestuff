@@ -9,6 +9,18 @@ enum PeninsulaState: Equatable {
     case charging(ChargingInfo)
     case faceID(FaceIDPhase)
     case notification(NotificationInfo)
+    case fingerprint(FingerprintPeninsulaInfo)
+}
+
+struct FingerprintPeninsulaInfo: Equatable {
+    enum Phase: Equatable {
+        case reading
+        case success
+        case failure
+    }
+
+    var phase: Phase
+    var progress: Double // 0...1, only meaningful while .reading
 }
 
 struct MusicInfo: Equatable {

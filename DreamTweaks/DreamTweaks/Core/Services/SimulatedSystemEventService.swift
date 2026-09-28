@@ -14,6 +14,10 @@ enum SimulatedSystemEvent {
     case batteryChanged(percent: Int)
     case notificationReceived(appName: String, message: String)
     case secondSpaceSwitched(spaceName: String)
+    case fingerprintScanProgress(Double)
+    case fingerprintScanSucceeded
+    case fingerprintScanFailed
+    case fingerprintScanDismissed
 }
 
 final class SimulatedSystemEventService: ObservableObject {

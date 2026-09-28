@@ -81,6 +81,10 @@ struct PeninsulaCompactContent: View {
                     .font(.caption2)
             case .notification:
                 Circle().fill(Color.blue).frame(width: 6, height: 6)
+            case .fingerprint(let info):
+                Image(systemName: info.phase == .success ? "checkmark" : "touchid")
+                    .foregroundStyle(info.phase == .failure ? .red : .white)
+                    .font(.caption2)
             default:
                 EmptyView()
             }
@@ -104,6 +108,8 @@ struct PeninsulaExpandedContent: View {
                 FaceIDPeninsulaView(phase: phase)
             case .notification(let info):
                 NotificationPeninsulaView(info: info)
+            case .fingerprint(let info):
+                FingerprintPeninsulaView(info: info)
             case .compact, .expanded:
                 StatusPeninsulaView()
             }
@@ -235,6 +241,66 @@ struct FaceIDPeninsulaView: View {
         case .scanning: return "Scanning (simulation)"
         case .success: return "Recognized (simulation)"
         case .failure: return "Not recognized"
+        }
+    }
+}
+
+struct FingerprintPeninsulaView: View {
+    let info: FingerprintPeninsulaInfo
+
+    var body: some View {
+        HStack(spacing: 14) {
+            Image(systemName: iconName)
+                .font(.title3)
+                .foregroundStyle(iconColor)
+
+            VStack(alignment: .leading, spacing: 6) {
+                Text(label).font(.subheadline.weight(.semibold))
+                if info.phase == .reading {
+                    ProgressBarView(progress: info.progress)
+                        .frame(height: 4)
+                }
+            }
+            Spacer()
+        }
+    }
+
+    private var iconName: String {
+        switch info.phase {
+        case .reading: return "touchid"
+        case .success: return "checkmark.circle.fill"
+        case .failure: return "xmark.circle.fill"
+        }
+    }
+
+    private var iconColor: Color {
+        switch info.phase {
+        case .reading: return .white
+        case .success: return .green
+        case .failure: return .red
+        }
+    }
+
+    private var label: String {
+        switch info.phase {
+        case .reading: return "Fingerprint Simulation"
+        case .success: return "Fingerprint recognized"
+        case .failure: return "Fingerprint not recognized"
+        }
+    }
+}
+
+struct ProgressBarView: View {
+    let progress: Double
+
+    var body: some View {
+        GeometryReader { proxy in
+            ZStack(alignment: .leading) {
+                Capsule().fill(Color.white.opacity(0.2))
+                Capsule().fill(Color.white)
+                    .frame(width: max(4, proxy.size.width * progress))
+                    .animation(.easeInOut(duration: 0.2), value: progress)
+            }
         }
     }
 }

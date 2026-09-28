@@ -68,8 +68,15 @@ account — the project itself is otherwise ready to build.
   timer, charging, notifications, Second Space switching, Face ID animation) so the
   whole concept can be demonstrated without real system integration.
 - **Unit tests** — preferences persistence, the Dynamic Peninsula engine's reaction to
-  simulated events, the Second Space engine, and `SystemIntegrationEngine`'s capability
-  reporting.
+  simulated events, the Second Space engine, the Mock Fingerprint manager's scan
+  state machine, and `SystemIntegrationEngine`'s capability reporting.
+- **Mock Touch Fingerprint** (`Features/Fingerprint/`) — an invisible, configurable
+  touch zone (default: bottom-center) that runs a purely visual contact → reading →
+  success/failure scan sequence, with a draggable position editor, a Lock Screen Demo,
+  a repeatable Test Sensor screen, and status surfaced in the Dynamic Peninsula. It
+  never reads, stores, or evaluates a real fingerprint and never touches Face ID, Touch
+  ID, or the passcode — see "Honesty about system integration" below and the in-app
+  copy, which always says "Mock Fingerprint Sensor" / "simulation."
 
 ## Honesty about system integration
 
@@ -84,6 +91,11 @@ than fakes) which features are out of reach of an ordinary App Store app:
 - Face ID *hardware* authentication is never touched — DreamTweaks only shows a
   Face ID-*style* animation for its own in-app lock, never claiming to replace Apple's
   actual biometric security.
+- The iPhone 12 has no under-display fingerprint sensor, no Touch ID, and Apple exposes
+  no raw biometric capture/match APIs to third-party apps. Mock Touch Fingerprint never
+  captures an image, never accesses biometric hardware, and never claims the user was
+  biometrically identified — the scan result is a locally simulated coin flip / fixed
+  outcome, and it cannot bypass Face ID, the passcode, or the real iOS Lock Screen.
 
 `JailbreakIntegration` is an empty, documented stub for a future opt-in backend. It
 contains no exploit code and invents no private APIs — every method currently reports
@@ -105,6 +117,8 @@ DreamTweaks/
     Features/
       Setup/                Onboarding flow
       Home/                 Dashboard
+      Fingerprint/          Mock Touch Fingerprint sensor, view, Lock Screen Demo,
+                            Test Sensor, position editor
       DynamicPeninsula/     Peninsula overlay + states
       SecondSpace/          Space switching UI
       Settings/             Settings screens

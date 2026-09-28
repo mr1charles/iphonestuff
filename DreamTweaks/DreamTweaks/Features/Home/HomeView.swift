@@ -34,8 +34,15 @@ struct HomeView: View {
                             isEnabled: appState.preferences.privacy.appLockEnabled,
                             statusText: appState.preferences.privacy.appLockEnabled ? "App Lock On" : "Open"
                         )
+                        FeatureStatusCard(
+                            title: "Mock Fingerprint",
+                            systemImage: "touchid",
+                            isEnabled: appState.preferences.fingerprint.isEnabled,
+                            statusText: appState.preferences.fingerprint.isEnabled ? "Simulation On" : "Disabled"
+                        )
                     }
 
+                    LockScreenDemoQuickLink()
                     TestLabQuickLink()
                 }
                 .padding(20)
@@ -89,6 +96,37 @@ struct FeatureStatusCard: View {
             RoundedRectangle(cornerRadius: 20, style: .continuous)
                 .strokeBorder(Color.primary.opacity(0.06))
         )
+    }
+}
+
+struct LockScreenDemoQuickLink: View {
+    @State private var showingDemo = false
+
+    var body: some View {
+        Button {
+            showingDemo = true
+        } label: {
+            HStack {
+                Image(systemName: "touchid")
+                VStack(alignment: .leading) {
+                    Text("Lock Screen Demo")
+                        .font(.subheadline.weight(.semibold))
+                    Text("Try the Mock Fingerprint sensor")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .foregroundStyle(.secondary)
+            }
+            .padding(16)
+            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 20, style: .continuous))
+        }
+        .buttonStyle(.plain)
+        .foregroundStyle(.primary)
+        .fullScreenCover(isPresented: $showingDemo) {
+            LockScreenDemoView()
+        }
     }
 }
 
