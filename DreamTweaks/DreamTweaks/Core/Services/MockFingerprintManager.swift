@@ -98,8 +98,10 @@ final class MockFingerprintManager: ObservableObject {
 
         let dismissDelay: Double = succeeded ? 1.1 : 1.4
         Task { [weak self] in
+            guard let self else { return }
             try? await Task.sleep(nanoseconds: UInt64(dismissDelay * 1_000_000_000))
-            await MainActor.run { self?.reset() }
+            guard !Task.isCancelled else { return }
+            await MainActor.run { self.reset() }
         }
     }
 

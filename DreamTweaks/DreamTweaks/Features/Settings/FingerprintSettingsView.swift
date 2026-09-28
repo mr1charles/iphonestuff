@@ -48,7 +48,7 @@ struct FingerprintSettingsView: View {
                 .pickerStyle(.inline)
             }
 
-            Section("Second Space") {
+            Section {
                 Picker("Unlock target", selection: Binding(
                     get: { appState.preferences.fingerprint.unlockTargetSpaceID },
                     set: { appState.preferences.fingerprint.unlockTargetSpaceID = $0 }
@@ -58,6 +58,8 @@ struct FingerprintSettingsView: View {
                         Text(space.name).tag(Optional(space.id))
                     }
                 }
+            } header: {
+                Text("Second Space")
             } footer: {
                 Text("If set, a successful simulated scan in the Lock Screen Demo switches DreamTweaks to this space. This never affects the real iOS Lock Screen.")
             }
