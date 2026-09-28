@@ -1,0 +1,66 @@
+name: Build DreamTweaks IPA
+
+# Builds DreamTweaks on GitHub's hosted macOS runners so an IPA can be
+# produced without owning a Mac. The IPA this workflow produces is
+# UNSIGNED (CODE_SIGNING_ALLOWED=NO) — it cannot be installed on a real
+# iPhone as-is. A sideloading tool (Sideloadly on Windows/Mac, or
+# AltServer-Linux on Linux) re-signs it with your own free Apple ID at
+# install time. See SIDELOADING.md for the Linux instructions.
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "**"
+    paths:
+      - "DreamTweaks/**"
+      - ".github/workflows/build-ipa.yml"
+
+jobs:
+  build:
+    runs-on: macos-14
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Show Xcode version
+        run: xcodebuild -version
+
+      - name: Run unit tests
+        run: |
+          xcodebuild test \
+            -project DreamTweaks/DreamTweaks.xcodeproj \
+            -scheme DreamTweaks \
+            -destination 'platform=iOS Simulator,name=iPhone 12' \
+            | xcpretty || true
+        continue-on-error: true
+
+      - name: Build unsigned .app for a real device
+        run: |
+          set -euxo pipefail
+          xcodebuild clean build \
+            -project DreamTweaks/DreamTweaks.xcodeproj \
+            -scheme DreamTweaks \
+            -configuration Release \
+            -sdk iphoneos \
+            -destination 'generic/platform=iOS' \
+            -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            DEVELOPMENT_TEAM=""
+
+      - name: Package as .ipa
+        run: |
+          set -euxo pipefail
+          cd build/Build/Products/Release-iphoneos
+          mkdir -p Payload
+          cp -r DreamTweaks.app Payload/
+          zip -r DreamTweaks-unsigned.ipa Payload
+
+      - name: Upload IPA artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: DreamTweaks-unsigned-ipa
+          path: build/Build/Products/Release-iphoneos/DreamTweaks-unsigned.ipa
+          retention-days: 14

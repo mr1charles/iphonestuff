@@ -22,6 +22,12 @@ project's own ground rules, nothing about a working build was assumed or faked:
 anything doesn't compile cleanly, that's the next thing to fix — this project has not
 been verified against a real Xcode toolchain.
 
+**Don't have a Mac?** `.github/workflows/build-ipa.yml` builds an unsigned IPA on
+GitHub's hosted macOS runners — no Mac purchase or rental needed to get the build
+artifact. You still need a real Mac/Xcode signature (Apple requires it) to run on a
+physical device; see [SIDELOADING.md](SIDELOADING.md) for a no-Mac way to do that on
+Linux with a free Apple ID.
+
 ## Building it yourself
 
 1. Open `DreamTweaks/DreamTweaks.xcodeproj` in Xcode 15+ (iOS 16 SDK or newer).
